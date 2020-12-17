@@ -1,0 +1,37 @@
+This shows you how to install chef server and chef node on Azure VM
+
+First step
+sign up for a free account on https://manage.chef.io/login
+Second step
+validate the account and set up an organization name 
+
+Create 2 VMs on the same group on Azure
+Create a resource group - create a MasterChefVm selecting ubuntu 18.04
+set the networking protocol to add port 22, go to basic and add http port 80 name port_80, go to basic add https port 443 name port_443
+Go the same group and create another VM ChefNodeVM selecting ubuntu 18.04
+
+Connect to both the VM's in the terminal 
+ssh username@xx.xxx.xxx.xx
+prompt will change to the VM name
+now you are connected 
+
+got to the manage.chef.io 
+and download the starter kit
+a zip file is downloaded 
+
+go back to the masterVM
+create a chef directory mkdir chef
+go to FileZilla and copy chef starter kit zip file from the downloads directory to the VM/chef directory (Please refer file TransferingfilesfromDesktoptoVMinFileZilla if you have trouble with this)
+unzip the starter.zip
+
+download the chef-workstation_20.12.205-1_amd64.deb from https://downloads.chef.io/products/workstation?os=ubuntu page
+copy through filezilla the deb file into your masterVM/chef directory (refer the file TransferingfilesfromDesktoptoVMinFileZilla in this repo if you have difficulties here)
+once copied 
+dpkg -i chef-workstation_20.12.205-1_amd64.deb
+this will unpack the deb file
+chef -v (verify the installation by checking the version)
+
+knife bootstrap <IP_ADDRESS of the node VM> -x <USER_NAME of your VM> -P <PASSWORD of your VM> --sudo -N <nodename> ( replace the <> with the options inside )
+go back to the manage.chef.io , refresh you will see the nodename in the nodes with your nodename, ip address
+hooray you have connected to the node
+
